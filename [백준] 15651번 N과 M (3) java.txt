@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class Study {
+
+  public static int N, M;
+  public static int[] selected;
+  public static StringBuilder sb = new StringBuilder();
+
+  public static void main(String[] args) {
+      Scanner in = new Scanner(System.in);
+
+      N = in.nextInt();//조합할 숫자를 입력
+      M = in.nextInt();//선택할 깊이를 입력
+
+      selected = new int[M]; //깊이 만큼 배열을 생성한다.
+
+      rec_func(0);//0일때 부터 재귀함수 실행
+      System.out.print(sb); //sb에 쌓인 string 값을 모두 출력
+  }
+
+  public static void rec_func(int depth) {
+      //phase1 : 설명을 위한 페이즈 구분
+      if (depth == M) { //깊이가 처음 설정한 깊이 값이 되기 전까지 배열의 값을 가져와 StringBuilder sb append 해줍니다.
+          for (int i = 0; i < M; i++) {
+              sb.append(selected[i] + " ");
+          }
+          sb.append("ck");
+          sb.append('\n');
+          return;
+      }
+      //phase2 : 설명을 위한 페이즈 구분
+      for (int i = 1; i <= N; i++) { //조합할 숫자보다 i 값이 작다면,
+          selected[depth] = i; //깊이가 아직 처음 설정한 깊이가 아닐때 그 값을 대입합니다.
+          //selected[0]에는 현재 1이 들어가 있는 상태.
+          //selected[0]에 1이 들어간 상태로 rec_func를 call 하게 되면
+          //rec_func(1)이 실행이 되고 depth는 아직 M 값이 아니라면 phase2로 진입하게 됩니다.
+          //phase2로 진입을 하게 된다면 selected[0]에 1이 들어간 상태로 selected[1]으로 for문의 i값이 1부터 1씩 증가하면서 대입됩니다.
+          //selected[1]으로 for문의 i값이 1부터 1씩 증가하면서 대입된 후에 rec_func(2)가 실행이 됩니다.
+          //만약 depth가 M과 일치하게 된다면 StringBuilder sb 변수에 배열에 들어있던 값이 차례대로 저장되게 됩니다.
+          rec_func(depth + 1);
+      }
+  }
+}
+
+출력 결과
+
+3
+2
+1 1 ck
+1 2 ck
+1 3 ck
+2 1 ck
+2 2 ck
+2 3 ck
+3 1 ck
+3 2 ck
+3 3 ck
