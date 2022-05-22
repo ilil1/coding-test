@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static int[] arr;
+    public static boolean[] visit;
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        int N = in.nextInt(); //자연수 입력
+        int M = in.nextInt(); //깊이 입력
+
+        arr = new int[M]; //깊이만큼 배열 갯수 생성
+        visit = new boolean[N]; //자연수가 중복되지 않게 방문 표시를 해준다.
+        dfs(N, M, 0);
+    }
+
+    public static void dfs(int N, int M, int depth) {
+        //phase1
+        if (depth == M) {
+            for (int i = 0; i < M; i++) {
+                System.out.print(arr[i] + " ");
+            }
+            System.out.println();
+            System.out.println("check");
+            return;
+        }
+        //phase2
+        for (int i = 0; i < N; i++) {
+            if (visit[i] != true) { //첫번째 phase2 : 처음 i = 0이 들어오고
+                visit[i] = true; //첫번째 phase2 : i = 0은 true 가 된다.
+                arr[depth] = i + 1; //i = 0 일 때 arr에 대입되는 값은 1 이다.
+                                    //i = 0일때는 true가 되었으므로 이제 i가 0일 때는 다음 dfs(N, M, depth + 1);에서 사용이 불가능하다.
+                                    //i = 1 일때 true가 아니므로 i = 1 일때는 사용이 가능하고 다음 dfs(N, M, depth + 1);에서 사용하게 된다.
+                                    //그래서 1 2 라는 값이 다음 dfs(N, M, depth + 1); 에서 phase1의 조건에 충족할시 출력이 됩니다.
+                                    
+                dfs(N, M, depth + 1);
+                
+                visit[i] = false; //첫번째 phase2 : i = 0은 i가 0일때 값들을 다 출력하고 false 가 된다.
+                //그러믈 다음 i = 1이 되었을 때 다시 i = 0 일때 값을 사용할 수 있습니다 2 1 그래서 2 1이 가능합니다. 
+                // 뒤의 1(i=0일때)은 다시 false가 되었기 때문입니다.
+            }
+        }
+    }
+}
+
+출력 결과
+
+3
+2
+1 2 
+check
+1 3 
+check
+2 1 
+check
+2 3 
+check
+3 1 
+check
+3 2 
+check
