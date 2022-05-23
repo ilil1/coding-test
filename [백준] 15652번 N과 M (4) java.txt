@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static int N, M;
+    public static int[] arr;
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        N = in.nextInt(); //자연수 입력받기
+        M = in.nextInt(); //깊이 입력받기
+        arr = new int[M]; //깊이 만큼 배열 생성
+
+        dfs(1, 0);
+    }
+    public static void dfs(int at, int depth) {
+        //phase1
+        if (depth == M) {
+            for (int val : arr) {
+                System.out.print(val + " ");
+            }
+            System.out.println();
+            return;
+        }
+        //phase2
+        for (int i = at; i <= N; i++) {
+            arr[depth] = i; //깊이가 0일때 배열의 첫번째 자리에 1의 값이 대입된다.
+            //dfs(i, depth + 1); 깊이가 + 1 되었으므로 다음 배열의 자리에는 1부터 입력이되서 1,2,3 이 차례대로 대입됩니다.
+            //그로인해 1,1이 depth가 충족이 된다면 출력이 됩니다. 그게 아닌경우에는 다시 다음 배열자리로 반복문이 1부터 넘어갑니다.
+            dfs(i, depth + 1);
+        }
+    }
+}
+
+실행 결과
+
+3
+2
+1 1 
+1 2 
+1 3 
+2 2 
+2 3 
+3 3 
