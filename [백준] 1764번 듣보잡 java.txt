@@ -1,0 +1,53 @@
+import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(bf.readLine());
+
+        int N = Integer.parseInt(st.nextToken());	// 듣도 못한 사람의 수
+        int M = Integer.parseInt(st.nextToken());	// 보도 못한 사람의 수
+
+        Set<String> hs = new HashSet<>();	// 듣도 못한 사람을 HashSet 으로 저장
+        List<String> list = new ArrayList<>(); //나중에 보도 못한 사람과 일치하면 리스트에 담는다
+
+        for(int i=0; i<N; i++)
+            hs.add(bf.readLine());	// 듣도 못한 사람 저장
+
+        for(int i=0; i<M; i++) {
+            String str = bf.readLine();
+            if(hs.contains(str)) { // 보도 못한 사람이 듣도 못한 사람에 있으면 list에 저장
+                list.add(str);
+            }
+        }
+        Collections.sort(list); //오름차순으로 정렬을 해줍니다.
+        System.out.println(list.size()); //배열이 크기를 반환합니다.
+        
+        for(int i = 0; i < list.size(); i++)
+            System.out.println(list.get(i));
+        bf.close();
+    }
+}
+
+출력 결과
+
+3 4
+ohhenrie
+charlie
+baesangwook
+obama
+baesangwook
+ohhenrie
+clinton
+
+2
+baesangwook
+ohhenrie
