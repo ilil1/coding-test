@@ -1,0 +1,42 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        int N;
+        int left, right;
+        int[] nums;
+        int diff = Integer.MAX_VALUE;
+        int result1 = 0;
+        int result2 = 0;
+
+        Scanner sc = new Scanner(System.in);
+        N = sc.nextInt();
+        nums = new int[N];
+
+        for (int i = 0; i < N; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        left = 0;
+        right = N - 1;
+
+        Arrays.sort(nums); //정렬
+
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+            int tmpDiff = Math.abs(sum);
+            if (tmpDiff < diff) {
+                diff = tmpDiff;
+                result1 = nums[left];
+                result2 = nums[right];
+            }
+            if (sum > 0) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+        System.out.println(result1 + " " + result2);
+    }
+}
