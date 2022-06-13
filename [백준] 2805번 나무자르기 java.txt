@@ -1,0 +1,61 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int N = in.nextInt(); // N개의 나무들 중
+        int target_M = in.nextInt(); // 필요한 나무 길이
+        int[] arr = new int[N];
+
+        int low = 0, high = 0;
+
+        for(int i = 0; i < N; i++) {
+            arr[i] = in.nextInt(); //입력 받은 나무들 중 최댓값을 구해준다.
+            if(high < arr[i]) {
+                high = arr[i];
+            }
+        }
+
+        while(low < high) { // 이분 탐색 (upper bound)
+            int mid = (low + high) / 2;
+            long mid_sum = 0;
+
+            for (int i = 0; i < arr.length; i++) {
+                if(arr[i] - mid > 0) {
+                    mid_sum += (arr[i] - mid);
+                }
+                //tree의 잘린 길이 = tree의 높이 - 자르는 위치(mid) tree의 잘린 길의의 합을 구한다.
+                //이 때 자르는 위치가 주어진 나무의 높이보다 클 수 있기 때문에
+                //0 이하인 경우(=음수)에는 합산을 하지 않고 양수만 합산하도록 해야한다.
+            }
+
+            System.out.println(low+","+high+","+mid+","+mid_sum);
+
+            if(mid_sum < target_M) {
+                //자른 나무 길의의 합이 M보다 작다는 것은 자르는 위치가 높아서 나무가 부족하므로 높이를 낮춰야 한다. 상한을 내려야 한다.
+                //즉, 상한(max)를 줄여야 한다.
+                high = mid;
+            }
+            //자른 나무 길이의 합이 M보다 크다는 것은 자르는 위치가 낮아서 높이를 높여야 한다. 하한(min)을 올려야 한다.
+            //같을 경우에는 그 값을 출력하게 되므로 min - 1을 하여 결과값을 도출한다.
+            else if(mid_sum >= target_M){
+                low = mid + 1;
+            }
+
+        }
+        System.out.println(low - 1);
+    }
+}
+
+<출력 결과>
+
+4 7
+20 15 10 17
+0,20,10,22
+11,20,15,7
+16,20,18,2
+16,18,17,3
+16,17,16,5
+15
+
+Process finished with exit code 0
