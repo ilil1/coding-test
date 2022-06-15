@@ -1,0 +1,91 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // 지방의 수
+        int[] arr = new int[N];
+
+        long answer = 0;
+        for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        Arrays.sort(arr); //오름차순 정렬
+
+        long M = sc.nextLong(); //사용 가능한 총 예산
+        long low = 0; //초기값
+        long high = arr[N - 1];
+
+        while (low <= high) {
+            long mid = (low + high) / 2; // 내야할 예산
+            long sum = 0; // 모든 지방 예산 합
+
+            for (int money : arr) {
+                if (money >= mid) {
+                    sum += mid; //최대 예산을 넘는 경우.
+                }
+                else {//최대 예산보다 적은경우.
+                    sum += money;
+                }
+            }
+            if (sum > M) { // 사용 가능 예산보다 더 큰 경우는 mid를 내려서 예산을 줄여봅니다.
+                high = mid - 1;
+            }
+            else { // 최대 예산보다 적은 경우 -> 예산을 높여서 최적의 값을 찾아냅니다.
+                low = mid + 1;
+                answer = Math.max(answer, mid);
+            }
+        }
+        System.out.println(answer);
+    }
+}
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // 지방의 수
+        int[] arr = new int[N];
+
+        long answer = 0;
+        for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        Arrays.sort(arr); //오름차순 정렬
+
+        long M = sc.nextLong(); //사용 가능한 총 예산
+        long low = 0; //초기값
+        long high = arr[N - 1];
+
+        while (low < high) {
+            long mid = (low + high) / 2; // 내야할 예산
+            long sum = 0; // 모든 지방 예산 합
+
+            System.out.println(low+","+high+","+mid);
+
+            for (int money : arr) {
+                if (money >= mid) {
+                    sum += mid; //최대 예산을 넘는 경우.
+                }
+                else {//최대 예산보다 적은경우.
+                    sum += money;
+                }
+            }
+            if (sum > M) { // 사용 가능 예산보다 더 큰 경우는 mid를 내려서 예산을 줄여봅니다.
+                high = mid;
+            }
+            else { // 최대 예산보다 적은 경우 -> 예산을 높여서 최적의 값을 찾아냅니다.
+                low = mid + 1;
+                answer = Math.max(answer, mid);
+            }
+        }
+        System.out.println(answer);
+    }
+}
